@@ -1,0 +1,31 @@
+{
+  "name": "inmedia",
+  "version": "0.0.1",
+  "description": "Abstracted Connect-like middleware and routing component.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R spec ./spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scivey/inmedia.git"
+  },
+  "keywords": [
+    "router",
+    "middleware",
+    "routing"
+  ],
+  "author": "Scott Ivey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scivey/inmedia/issues"
+  },
+  "dependencies": {
+    "underscore": "~1.5.2"
+  },
+  "devDependencies": {
+    "mocha": "~1.14.0",
+    "better-assert": "~1.0.0",
+    "coffee": "0.0.1"
+  }
+}
