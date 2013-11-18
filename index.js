@@ -81,7 +81,9 @@
         return _router.handle(reqs);
       });
     };
-    _handleRequest = function(reqs) {
+    _handleRequest = function() {
+      var reqs;
+      reqs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       dbg("handleRequest");
       return _middleware.handle(reqs, _passToRouter);
     };

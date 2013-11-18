@@ -73,7 +73,7 @@ makeMiddlewareRouter = (options) ->
 
 
 	# passed an array of pipeline objects by output#handle()
-	_handleRequest = (reqs) ->
+	_handleRequest = (reqs...) ->
 
 		dbg("handleRequest")
 		_middleware.handle reqs, _passToRouter

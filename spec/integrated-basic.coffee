@@ -57,7 +57,7 @@ describe "MidwareRouter", ->
 
 		pipeline.useMiddleware midware
 		pipeline.useRoute always, handler
-		pipeline.handle [anObj]
+		pipeline.handle anObj
 
 	it "uses passed middleware in the correct order.", (done) ->
 
@@ -90,7 +90,7 @@ describe "MidwareRouter", ->
 		pipeline.useMiddleware midware3
 
 		pipeline.useRoute always, handler
-		pipeline.handle [anObj]
+		pipeline.handle anObj
 
 	it "uses the first true-returning route.", (done) ->
 
@@ -113,7 +113,7 @@ describe "MidwareRouter", ->
 		pipeline.useRoute always, goodHandler
 		pipeline.useRoute always, badHandler
 
-		pipeline.handle [anObj]
+		pipeline.handle anObj
 
 	it "chooses the correct route based on predicate return value, not on route sequence alone.", (done) ->
 
@@ -132,7 +132,7 @@ describe "MidwareRouter", ->
 		pipeline.useRoute never, badHandler
 		pipeline.useRoute always, goodHandler
 
-		pipeline.handle [anObj]
+		pipeline.handle anObj
 
 	it "allows for a flexible number of pipeline objects", (done) ->
 
@@ -160,5 +160,5 @@ describe "MidwareRouter", ->
 		pipeline.useMiddleware midware
 		pipeline.useRoute always, handler
 
-		pipeline.handle [obj1, obj2, obj3]
+		pipeline.handle obj1, obj2, obj3
 
