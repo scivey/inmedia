@@ -3,9 +3,63 @@ Node.js: inmedia
 =================
 Scott Ivey -> http://www.scivey.net
 
-__inmedia__ is an abstracted Connect-like middleware and routing component.  
+__inmedia__ is an abstracted [Connect][connecturl]-like middleware and routing component for Node.js, with flexible handler signatures and predicate-based routing.
 
-It allows for routes based on any number of pipeline elements, so Connect's `(req, res, next)` signature can be replaced by `(justOne, next)` or `(oneFish, twoFish, redFish, blueFish, next)`.  This flexibility can be locked down with optional arity (argument-count) enforcement, specified with an options hash passed in at construction.
+[connecturl]: http://www.senchalabs.org/connect/
+
+It enables the aggregation of simple, reusable handler functions into complex filtering and data transformations.  
+
+The following __inmedia__-based pipeline downloads a given webpage and searches it for the word "Todd."  If "Todd" appears anywhere on the page, it extracts every link, downloads those pages, and repeats the cycle until two hundred pages have been fetched or the trail runs cold.  Each result is written to disk as "toddResults/result_NUM.json".
+
+Why Todd?  Because we like Todd, or maybe because we hate him.
+
+It is unlikely that we are Todd-neutral.
+
+
+```javascript
+var request = require("request");
+var inmedia = require("inmedia");
+
+var router = inmedia();
+var makeRequest = function(page) {
+	request(page.uri, function(err, response, body)) {
+		page.body = body;
+		router.handle(page);
+	}
+}
+
+var pageCount = 0;
+var limiter = function(page, next) {
+	pageCount++;
+	if (pageCount < 200) next();
+}
+router.useMiddleware(limiter);
+
+var toddFilter = function(page, next) {
+	var toddRegex = /\bTodd\b/m;
+	if (toddRegex.test(page.body)) next();
+}
+router.useMiddleware(toddFilter);
+
+var linkExtractionRoute = function(page) {
+	var linkRegex = /\bhref="([^"]+)"\b/igm
+	var match;
+	while( match = linkRegex.exec(page.body) ) {
+		makeRequest({uri: match[1]});
+	}
+	var outputFile = "toddResults/result_" + pageCount + ".json";
+	fs.writeFile(outputFile, JSON.stringify(page), function(err) {
+		console.log("Wrote to " + outputFile);
+	});
+}
+router.useRoute(linkExtractionRoute);
+router.handle({uri: "http://www.google.com/search?q=todd});
+```
+
+Overview
+---
+
+__inmedia__ allows for routes based on any number of pipeline elements, so Connect's `(req, res, next)` signature can be replaced by `(justOne, next)` or `(oneFish, twoFish, redFish, blueFish, next)`.  This flexibility can be locked down with optional arity (argument-count) enforcement, specified with an options hash passed in at construction.
 
 Routing is based on predicate functions instead of strings, enabling a much wider variety of use cases.
 
@@ -40,7 +94,7 @@ __inmedia__ can be used as a pipeline for event handling, or for any process inv
 Filtering:
 
 ```javascript
-var onlySmith = function(person, next) {
+var onlySmiths = function(person, next) {
 	if (person.lastName === "Smith") {
 		next();
 	}
@@ -48,19 +102,19 @@ var onlySmith = function(person, next) {
 	// element falls out of pipeline
 }
 
-
 var printPerson = function(person) {
 	console.log("\nfirst: " + person.first 
 				+ "  last: " + person.last );
 }
 
 var router = inmedia();
-router.useMiddleware(onlySmith);
+router.useMiddleware(onlySmiths);
 router.useRoute(always, printPerson);
-router.handle({firstName: "Colonel", lastName: "Mustard"})
 router.handle({firstName: "John", lastName: "Smith"});
-router.handle({firstName: "Mary", lastName: "Smith"});
+router.handle({firstName: "Colonel", lastName: "Mustard"})
 router.handle({firstName: "Nikola", lastName: "Tesla"});
+router.handle({firstName: "Mary", lastName: "Smith"});
+
 
 // output:
 // "first: John  last: Smith"
@@ -124,32 +178,16 @@ var uriFetcher = (pageObj, next) {
 		uri.body = body;
 		next();
 }
-var toddParser = (pageObj, next) {
-	// get the string index of every appearance of
-	// the word "todd" in the page body.
-	var toddRegex = /^.*\btodd\b.*$/igm
-	var toddIndices = [];
-	var match;
-	while ( match = toddRegex.exec(pageObj.body) ) {
-		toddIndices.push( match.index );
-	}
-	pageObj.toddIndices = toddIndices;
-	next();
-}
 var router = inmedia();
 router.useMiddleware(uriFetcher);
-router.useMiddleware(toddParser);
+
+
 router.useHandler(always, function(pageObj) {
-	console.log("Todd occurrences: ");
 	console.log(pageObj.toddIndices)
 });
 router.handle({uri: "http://www.cnn.com"});
-
-// output is every string index of todd's 
-// name on cnn's main website.
 ```
 
-All of these operations can be combined to accomplish complex filtering and data transformations.  As an example, we'll make a pipeline that accepts objects with `uri` properties, fetches the page bodies, finds every index of the word "Todd", and only passes the page objects on to the routes if "Todd" appears in the page body at least once.
 
 Why Todd?  Because we like Todd, or maybe because we hate him.
 
