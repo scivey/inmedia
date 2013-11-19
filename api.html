@@ -1,0 +1,362 @@
+<html>
+<head>
+	<meta id="view-meta" name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">	
+	<title></title>
+<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+</head>
+<body>
+	<div id="page-frame">
+		<div id="site-header">
+			<h1>inmedia</h1>
+			<div class="header-links">
+				<span class="link-wrapper-span">
+				
+					
+						<a href="index.html">Home</a>
+					
+
+				
+					
+						<a href="overview.html">Overview</a>
+					
+
+				
+					
+						<a class="active-head-link" href="api.html">API</a>
+					
+
+				
+					
+						<a href="spec.html">Specs</a>
+					
+
+				
+				</span>
+			</div>
+		</div>
+		<div id="body-frame">
+			
+				<h2>API</h2>
+			
+			
+<div class="api-frame">
+<div class="api-list-index">
+		<ul>
+		
+		<li>
+			<a href="#get">get</a>
+		</li>
+		
+		<li>
+			<a href="#handle">handle</a>
+		</li>
+		
+		<li>
+			<a href="#inmedia">inmedia</a>
+		</li>
+		
+		<li>
+			<a href="#set">set</a>
+		</li>
+		
+		<li>
+			<a href="#useMiddleware">useMiddleware</a>
+		</li>
+		
+		<li>
+			<a href="#useRoute">useRoute</a>
+		</li>
+		
+	</ul>
+</div>
+<div class="api-list">
+	
+	<div class="api-list-item">
+		<div class="api-item-title">
+		<a name="get">
+				
+			<h3>get(optName)
+			</h3>
+
+		</a>
+		</div>
+		<div class="api-list-item-body">
+			<div class="api-item-description">
+				<p>Get the value of a router-wide option, if it's defined.</p>
+			</div>
+			<h5 class="api-item-subtitle">Parameters</h5>
+			<ul class="api-item-list api-item-params">
+				
+					
+					<li>
+						<code>optName</code>: 
+						String
+						<p>
+						The parameter name.
+						</p>
+					</li>
+					
+				
+			</ul>
+			<h5 class="api-item-subtitle">Returns</h5>
+			<ul class="api-item-list api-item-returns">
+				<li>
+					
+						Any, null
+						<p>
+							Return type depends on the particular setting, and most settings will be defined by code layered on top of the router. `null` is returned if the option has not been defined.
+						</p>
+					
+				</li>
+			</ul>
+		</div>
+
+	</div>
+	
+	<div class="api-list-item">
+		<div class="api-item-title">
+		<a name="handle">
+				
+			<h3>handle(elem1[,elem2...])
+			</h3>
+
+		</a>
+		</div>
+		<div class="api-list-item-body">
+			<div class="api-item-description">
+				<p>Pass object(s) in for handling as pipeline elements.  Objects wil be filtered through middleware and then routed.  In Connect, this corresponds to the client's HTTP request being passed to Connect's middleware handling system. </p>
+			</div>
+			<h5 class="api-item-subtitle">Parameters</h5>
+			<ul class="api-item-list api-item-params">
+				
+					
+					<li>
+						<code>elem1[,elem2...]</code>: 
+						Object(s)
+						<p>
+						One or more objects to be passed through the middleware and routing systems. In Connect, these would be the `req` and `res` objects.
+						</p>
+					</li>
+					
+				
+			</ul>
+			<h5 class="api-item-subtitle">Returns</h5>
+			<ul class="api-item-list api-item-returns">
+				<li>
+					
+						Router
+						<p>
+							The same router instance is returned (chained).
+						</p>
+					
+				</li>
+			</ul>
+		</div>
+
+	</div>
+	
+	<div class="api-list-item">
+		<div class="api-item-title">
+		<a name="inmedia">
+				
+			<h3>inmedia(options)
+			</h3>
+
+		</a>
+		</div>
+		<div class="api-list-item-body">
+			<div class="api-item-description">
+				<p>A factory function for constructing new routers.  It isn't a constructor function, so there's no need to call it with <code>new</code>.</p>
+
+<p>Options include: </p>
+
+<ul>
+<li><code>defaultRoute</code>: a route to use if no route predicate returns true.  The built-in <code>defaultRoute</code> throws an error.</li>
+<li><code>enforceArity</code>: limits middleware and routing handlers to the given arity, <em>plus one</em> for the <code>next</code> parameter.</li>
+</ul>
+
+<p>There is no default arity enforcement.  Internally, <code>next</code> is appended onto the array of passed parameters and they're all passed to a handler via <code>#apply</code>.</p>
+			</div>
+			<h5 class="api-item-subtitle">Parameters</h5>
+			<ul class="api-item-list api-item-params">
+				
+					
+					<li>
+						<code>options</code>: 
+						Object
+						<p>
+						A hash of options 
+						</p>
+					</li>
+					
+				
+			</ul>
+			<h5 class="api-item-subtitle">Returns</h5>
+			<ul class="api-item-list api-item-returns">
+				<li>
+					
+						Object
+						<p>
+							A new routing object with methods for adding middleware, adding routes, handling new pipeline elements, and getting and setting options.
+						</p>
+					
+				</li>
+			</ul>
+		</div>
+
+	</div>
+	
+	<div class="api-list-item">
+		<div class="api-item-title">
+		<a name="set">
+				
+			<h3>set(optName, newVal)
+			</h3>
+
+		</a>
+		</div>
+		<div class="api-list-item-body">
+			<div class="api-item-description">
+				<p>Set the value of a router-wide option, given as a key-val pair, or set the value of multiple options by passing in an object.</p>
+			</div>
+			<h5 class="api-item-subtitle">Parameters</h5>
+			<ul class="api-item-list api-item-params">
+				
+					
+					<li>
+						<code>optName</code>: 
+						String, Object
+						<p>
+						The name of the option to be set, if given as a key-value pair. Alternately, an object with multiple options to be set.
+						</p>
+					</li>
+					
+					<li>
+						<code>newVal</code>: 
+						Any
+						<p>
+						The updated value of the option, if given as a key-value pair.
+						</p>
+					</li>
+					
+				
+			</ul>
+			<h5 class="api-item-subtitle">Returns</h5>
+			<ul class="api-item-list api-item-returns">
+				<li>
+					
+						Router
+						<p>
+							The same router instance is returned (chained).
+						</p>
+					
+				</li>
+			</ul>
+		</div>
+
+	</div>
+	
+	<div class="api-list-item">
+		<div class="api-item-title">
+		<a name="useMiddleware">
+				
+			<h3>useMiddleware(midwareFn)
+			</h3>
+
+		</a>
+		</div>
+		<div class="api-list-item-body">
+			<div class="api-item-description">
+				<p>Add a middleware function to the stack.  Middleware is a function with a <code>req, res, next</code>-type signature, as in Connect, but the number of parameters before <code>next</code> is allowed to vary for the sake of flexibility.  In practice this should be locked down with the global <code>enforceArity</code> option.</p>
+			</div>
+			<h5 class="api-item-subtitle">Parameters</h5>
+			<ul class="api-item-list api-item-params">
+				
+					
+					<li>
+						<code>midwareFn</code>: 
+						Function
+						<p>
+						A middleware function which will receive pipeline element(s) and a `next` method to call if the objects should continue down the route.
+						</p>
+					</li>
+					
+				
+			</ul>
+			<h5 class="api-item-subtitle">Returns</h5>
+			<ul class="api-item-list api-item-returns">
+				<li>
+					
+						Router
+						<p>
+							The same router instance is returned (chained).
+						</p>
+					
+				</li>
+			</ul>
+		</div>
+
+	</div>
+	
+	<div class="api-list-item">
+		<div class="api-item-title">
+		<a name="useRoute">
+				
+			<h3>useRoute(predicateFn, handlerFn)
+			</h3>
+
+		</a>
+		</div>
+		<div class="api-list-item-body">
+			<div class="api-item-description">
+				<p>Define a route by passing in a predicate (truth-test) and route handler.</p>
+
+<p>A route is specified by passing in two functions.  The first is a predicate which is passed the piped object(s), inspects them, and returns <code>true</code> if it wants to accept responsibility for them. Otherwise, it should return <code>false</code> or should not return at all.  This predicate is a generalization of Connect's URL-based routing, intended for pipelines where there may not be an obvious single string to base routing on. </p>
+
+<p>If the predicate returns true, the object(s) are removed from the pipeline and passed to the the route handler.  No route predicates further down the pipeline are tested: the earlier a route is defined in the script, the higher its priority.</p>
+
+<p>The route handler should implement the actual logic / data operations associated with the route: extracting information, writing results to disk, and so on.  Implementing this kind of code in the predicate may make the pipeline difficult to modify.</p>
+			</div>
+			<h5 class="api-item-subtitle">Parameters</h5>
+			<ul class="api-item-list api-item-params">
+				
+					
+					<li>
+						<code>predicateFn</code>: 
+						Function
+						<p>
+						A function which is passed the routed object(s) and returns `true` if its associated handler should be passed the objects.
+						</p>
+					</li>
+					
+					<li>
+						<code>handlerFn</code>: 
+						Function
+						<p>
+						A function which is passed the routed object(s) if its associated predicate returns true, after which the objects are removed from the pipeline and no further route predicates are tested.
+						</p>
+					</li>
+					
+				
+			</ul>
+			<h5 class="api-item-subtitle">Returns</h5>
+			<ul class="api-item-list api-item-returns">
+				<li>
+					
+						Router
+						<p>
+							The same router instance is returned (chained).
+						</p>
+					
+				</li>
+			</ul>
+		</div>
+
+	</div>
+	
+</div>
+</div>
+		</div>
+	</div>
+</body>
+</html>

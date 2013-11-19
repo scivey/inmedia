@@ -1,0 +1,234 @@
+[
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "Function"
+        ],
+        "name": "midwareFn",
+        "description": "A middleware function which will receive pipeline element(s) and a `next` method to call if the objects should continue down the route."
+      },
+      {
+        "type": "return",
+        "types": [
+          "Router"
+        ],
+        "description": "The same router instance is returned (chained)."
+      }
+    ],
+    "description": {
+      "full": "<p>Add a middleware function to the stack.  Middleware is a function with a <code>req, res, next</code>-type signature, as in Connect, but the number of parameters before <code>next</code> is allowed to vary for the sake of flexibility.  In practice this should be locked down with the global <code>enforceArity</code> option.</p>",
+      "summary": "<p>Add a middleware function to the stack.  Middleware is a function with a <code>req, res, next</code>-type signature, as in Connect, but the number of parameters before <code>next</code> is allowed to vary for the sake of flexibility.  In practice this should be locked down with the global <code>enforceArity</code> option.</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "outputRef.useMiddleware = _useMiddleware;",
+    "ctx": {
+      "type": "property",
+      "receiver": "outputRef",
+      "name": "useMiddleware",
+      "value": "_useMiddleware",
+      "string": "outputRef.useMiddleware"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "Object(s)"
+        ],
+        "name": "elem1[,elem2...]",
+        "description": "One or more objects to be passed through the middleware and routing systems. In Connect, these would be the `req` and `res` objects."
+      },
+      {
+        "type": "return",
+        "types": [
+          "Router"
+        ],
+        "description": "The same router instance is returned (chained)."
+      }
+    ],
+    "description": {
+      "full": "<p>Pass object(s) in for handling as pipeline elements.  Objects wil be filtered through middleware and then routed.  In Connect, this corresponds to the client's HTTP request being passed to Connect's middleware handling system. </p>",
+      "summary": "<p>Pass object(s) in for handling as pipeline elements.  Objects wil be filtered through middleware and then routed.  In Connect, this corresponds to the client's HTTP request being passed to Connect's middleware handling system. </p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "outputRef.handle = _handleRequest;",
+    "ctx": {
+      "type": "property",
+      "receiver": "outputRef",
+      "name": "handle",
+      "value": "_handleRequest",
+      "string": "outputRef.handle"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "Function"
+        ],
+        "name": "predicateFn",
+        "description": "A function which is passed the routed object(s) and returns `true` if its associated handler should be passed the objects."
+      },
+      {
+        "type": "param",
+        "types": [
+          "Function"
+        ],
+        "name": "handlerFn",
+        "description": "A function which is passed the routed object(s) if its associated predicate returns true, after which the objects are removed from the pipeline and no further route predicates are tested."
+      },
+      {
+        "type": "return",
+        "types": [
+          "Router"
+        ],
+        "description": "The same router instance is returned (chained)."
+      }
+    ],
+    "description": {
+      "full": "<p>Define a route by passing in a predicate (truth-test) and route handler.</p>\n\n<p>A route is specified by passing in two functions.  The first is a predicate which is passed the piped object(s), inspects them, and returns <code>true</code> if it wants to accept responsibility for them. Otherwise, it should return <code>false</code> or should not return at all.  This predicate is a generalization of Connect's URL-based routing, intended for pipelines where there may not be an obvious single string to base routing on. </p>\n\n<p>If the predicate returns true, the object(s) are removed from the pipeline and passed to the the route handler.  No route predicates further down the pipeline are tested: the earlier a route is defined in the script, the higher its priority.</p>\n\n<p>The route handler should implement the actual logic / data operations associated with the route: extracting information, writing results to disk, and so on.  Implementing this kind of code in the predicate may make the pipeline difficult to modify.</p>",
+      "summary": "<p>Define a route by passing in a predicate (truth-test) and route handler.</p>",
+      "body": "<p>A route is specified by passing in two functions.  The first is a predicate which is passed the piped object(s), inspects them, and returns <code>true</code> if it wants to accept responsibility for them. Otherwise, it should return <code>false</code> or should not return at all.  This predicate is a generalization of Connect's URL-based routing, intended for pipelines where there may not be an obvious single string to base routing on. </p>\n\n<p>If the predicate returns true, the object(s) are removed from the pipeline and passed to the the route handler.  No route predicates further down the pipeline are tested: the earlier a route is defined in the script, the higher its priority.</p>\n\n<p>The route handler should implement the actual logic / data operations associated with the route: extracting information, writing results to disk, and so on.  Implementing this kind of code in the predicate may make the pipeline difficult to modify.</p>"
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "outputRef.useRoute = _useRoute;",
+    "ctx": {
+      "type": "property",
+      "receiver": "outputRef",
+      "name": "useRoute",
+      "value": "_useRoute",
+      "string": "outputRef.useRoute"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String"
+        ],
+        "name": "optName",
+        "description": "The parameter name."
+      },
+      {
+        "type": "",
+        "string": ""
+      },
+      {
+        "type": "return",
+        "types": [
+          "Any",
+          "null"
+        ],
+        "description": "Return type depends on the particular setting, and most settings will be defined by code layered on top of the router. `null` is returned if the option has not been defined."
+      }
+    ],
+    "description": {
+      "full": "<p>Get the value of a router-wide option, if it's defined.</p>",
+      "summary": "<p>Get the value of a router-wide option, if it's defined.</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "outputRef.get = function(aKey) {\n      if (_options[aKey] != null) {\n        return _options[aKey];\n      } else {\n        return null;\n      }\n    };",
+    "ctx": {
+      "type": "method",
+      "receiver": "outputRef",
+      "name": "get",
+      "string": "outputRef.get()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "String",
+          "Object"
+        ],
+        "name": "optName",
+        "description": "The name of the option to be set, if given as a key-value pair. Alternately, an object with multiple options to be set."
+      },
+      {
+        "type": "param",
+        "types": [
+          "Any"
+        ],
+        "name": "newVal",
+        "description": "The updated value of the option, if given as a key-value pair."
+      },
+      {
+        "type": "",
+        "string": ""
+      },
+      {
+        "type": "return",
+        "types": [
+          "Router"
+        ],
+        "description": "The same router instance is returned (chained)."
+      }
+    ],
+    "description": {
+      "full": "<p>Set the value of a router-wide option, given as a key-val pair, or set the value of multiple options by passing in an object.</p>",
+      "summary": "<p>Set the value of a router-wide option, given as a key-val pair, or set the value of multiple options by passing in an object.</p>",
+      "body": ""
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "outputRef.set = function(aKey, aVal) {\n      if (_.isObject(aKey)) {\n        _.extend(_options, aKey);\n      } else {\n        _options[aKey] = aVal;\n      }\n      return outputRef;\n    };\n    return outputRef;\n  };\n\n  exp = {};",
+    "ctx": {
+      "type": "method",
+      "receiver": "outputRef",
+      "name": "set",
+      "string": "outputRef.set()"
+    }
+  },
+  {
+    "tags": [
+      {
+        "type": "param",
+        "types": [
+          "Object"
+        ],
+        "name": "options",
+        "description": "A hash of options "
+      },
+      {
+        "type": "",
+        "string": ""
+      },
+      {
+        "type": "return",
+        "types": [
+          "Object"
+        ],
+        "description": "A new routing object with methods for adding middleware, adding routes, handling new pipeline elements, and getting and setting options."
+      }
+    ],
+    "description": {
+      "full": "<p>A factory function for constructing new routers.  It isn't a constructor function, so there's no need to call it with <code>new</code>.</p>\n\n<p>Options include: </p>\n\n<ul>\n<li><code>defaultRoute</code>: a route to use if no route predicate returns true.  The built-in <code>defaultRoute</code> throws an error.</li>\n<li><code>enforceArity</code>: limits middleware and routing handlers to the given arity, <em>plus one</em> for the <code>next</code> parameter.</li>\n</ul>\n\n<p>There is no default arity enforcement.  Internally, <code>next</code> is appended onto the array of passed parameters and they're all passed to a handler via <code>#apply</code>.</p>",
+      "summary": "<p>A factory function for constructing new routers.  It isn't a constructor function, so there's no need to call it with <code>new</code>.</p>",
+      "body": "<p>Options include: </p>\n\n<ul>\n<li><code>defaultRoute</code>: a route to use if no route predicate returns true.  The built-in <code>defaultRoute</code> throws an error.</li>\n<li><code>enforceArity</code>: limits middleware and routing handlers to the given arity, <em>plus one</em> for the <code>next</code> parameter.</li>\n</ul>\n\n<p>There is no default arity enforcement.  Internally, <code>next</code> is appended onto the array of passed parameters and they're all passed to a handler via <code>#apply</code>.</p>"
+    },
+    "isPrivate": false,
+    "ignore": false,
+    "code": "exp.inmedia = makeMiddlewareRouter;\n\n  module.exports = exp.inmedia;\n\n}).call(this);",
+    "ctx": {
+      "type": "property",
+      "receiver": "exp",
+      "name": "inmedia",
+      "value": "makeMiddlewareRouter",
+      "string": "exp.inmedia"
+    }
+  }
+]

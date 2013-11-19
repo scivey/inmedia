@@ -1,0 +1,160 @@
+<html>
+<head>
+	<meta id="view-meta" name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">	
+	<title></title>
+<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+</head>
+<body>
+	<div id="page-frame">
+		<div id="site-header">
+			<h1>inmedia</h1>
+			<div class="header-links">
+				<span class="link-wrapper-span">
+				
+					
+						<a href="index.html">Home</a>
+					
+
+				
+					
+						<a href="overview.html">Overview</a>
+					
+
+				
+					
+						<a href="api.html">API</a>
+					
+
+				
+					
+						<a class="active-head-link" href="spec.html">Specs</a>
+					
+
+				
+				</span>
+			</div>
+		</div>
+		<div id="body-frame">
+			
+				<h2>Specs</h2>
+			
+			
+<div class="spec-report">
+	<div class="gh-spec-link">
+<a href="https://github.com/scivey/inmedia/tree/master/spec"><h4>See the test code at GitHub</h4></a>
+	</div>
+	
+	<ul class="spec-stats">
+		<li><span class="stat-name">Tests: </span>19</li>
+		<li><span class="stat-name">Passing: </span>19 / 19</li>
+	</ul>
+	
+	<div class="spec-suite">
+		<h4 class="spec-suite-title">MidwareRouter</h4>
+		<ul class="spec-suite-item-list">
+			
+			<li class="spec-suite-item">
+				uses the middleware it&#x27;s passed
+			</li>
+			
+			<li class="spec-suite-item">
+				uses passed middleware in the correct order.
+			</li>
+			
+			<li class="spec-suite-item">
+				uses the first true-returning route.
+			</li>
+			
+			<li class="spec-suite-item">
+				chooses the route based on predicate return value, not on route sequence alone.
+			</li>
+			
+			<li class="spec-suite-item">
+				allows for a flexible number of pipeline elements (handles different middleware and routing function arities)
+			</li>
+			
+		</ul>
+	</div>
+	
+	<div class="spec-suite">
+		<h4 class="spec-suite-title">Midware</h4>
+		<ul class="spec-suite-item-list">
+			
+			<li class="spec-suite-item">
+				has #handle and #use methods
+			</li>
+			
+			<li class="spec-suite-item">
+				uses a passed middleware function to manipulate an object value
+			</li>
+			
+			<li class="spec-suite-item">
+				passes objects from one middleware function to the next
+			</li>
+			
+			<li class="spec-suite-item">
+				passed pipeline elements to middleware functions in the correct order
+			</li>
+			
+			<li class="spec-suite-item">
+				allows for a flexible number of pipeline elements (handles different middleware function arities)
+			</li>
+			
+		</ul>
+	</div>
+	
+	<div class="spec-suite">
+		<h4 class="spec-suite-title">PredRouter::functional</h4>
+		<ul class="spec-suite-item-list">
+			
+			<li class="spec-suite-item">
+				chooses the first correct route - part 1
+			</li>
+			
+			<li class="spec-suite-item">
+				chooses the first correct route - part 2
+			</li>
+			
+			<li class="spec-suite-item">
+				chooses the first correct route - part 3
+			</li>
+			
+			<li class="spec-suite-item">
+				chooses the first correct route - part 4
+			</li>
+			
+		</ul>
+	</div>
+	
+	<div class="spec-suite">
+		<h4 class="spec-suite-title">PredRouter</h4>
+		<ul class="spec-suite-item-list">
+			
+			<li class="spec-suite-item">
+				has #handle and #use methods
+			</li>
+			
+			<li class="spec-suite-item">
+				accepts and uses a predicate-handler pair
+			</li>
+			
+			<li class="spec-suite-item">
+				chooses the route based on predicate result, not on sequence alone
+			</li>
+			
+			<li class="spec-suite-item">
+				chooses the first true-returning route when later route predicates would return true for the pipeline element(s)
+			</li>
+			
+			<li class="spec-suite-item">
+				allows for a flexible number of pipeline elements (handles different routing function arities)
+			</li>
+			
+		</ul>
+	</div>
+	
+</div>
+		</div>
+	</div>
+</body>
+</html>

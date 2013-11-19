@@ -1,0 +1,92 @@
+<html>
+<head>
+	<meta id="view-meta" name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">	
+	<title></title>
+<link rel="stylesheet" type="text/css" href="css/styles.css"/>
+</head>
+<body>
+	<div id="page-frame">
+		<div id="site-header">
+			<h1>inmedia</h1>
+			<div class="header-links">
+				<span class="link-wrapper-span">
+				
+					
+						<a class="active-head-link" href="index.html">Home</a>
+					
+
+				
+					
+						<a href="overview.html">Overview</a>
+					
+
+				
+					
+						<a href="api.html">API</a>
+					
+
+				
+					
+						<a href="spec.html">Specs</a>
+					
+
+				
+				</span>
+			</div>
+		</div>
+		<div id="body-frame">
+			
+				<span class="no-title-span"></span>
+			
+			<div class="basic-content-frame">
+<p><strong>inmedia</strong> is an abstracted <a href="http://www.senchalabs.org/connect/">Connect</a>-like middleware and routing system for Node.js, with flexible handler signatures and predicate-based route selection.</p>
+<p>It enables the aggregation of simple, reusable handler functions into complex filters and data transformations.  </p>
+<p>The following <strong>inmedia</strong>-based pipeline downloads a given webpage and searches it for the string <em>Todd</em>.  If <em>Todd</em> appears anywhere on the page, it extracts every link, downloads those pages, and repeats the cycle until two hundred pages have been fetched or the trail runs cold.  Each result is written to disk for later processing.</p>
+<p>Why Todd?  Because we like Todd, or maybe because we hate him.  Either way, it&#39;s clear we have strong feelings.</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> request <span class="keyword operator">=</span> <span class="function call">require</span>(<span class="string">"request"</span>);
+<span class="keyword">var</span> inmedia <span class="keyword operator">=</span> <span class="function call">require</span>(<span class="string">"inmedia"</span>);
+
+<span class="keyword">var</span> router <span class="keyword operator">=</span> <span class="function call">inmedia</span>();
+<span class="storage">var</span> <span class="entity function">makeRequest</span> <span class="keyword operator">=</span> <span class="keyword">function</span>(page) {
+    <span class="function call">request</span>(page.uri, <span class="keyword">function</span>(err, response, body)) {
+        console.<span class="support method">log</span>(<span class="string">"Fetched URI: "</span> <span class="keyword operator">+</span> page.uri);
+        page.body <span class="keyword operator">=</span> body;
+        router.<span class="function call">handle</span>(page);
+    }
+}
+
+<span class="keyword">var</span> pageCount <span class="keyword operator">=</span> <span class="constant numeric">0</span>;
+<span class="storage">var</span> <span class="entity function">limiter</span> <span class="keyword operator">=</span> <span class="keyword">function</span>(page, next) {
+    pageCount<span class="keyword operator">+</span><span class="keyword operator">+</span>;
+    <span class="keyword">if</span> (pageCount <span class="keyword operator">&lt;</span> <span class="constant numeric">200</span>) <span class="function call">next</span>();
+}
+router.<span class="function call">useMiddleware</span>(limiter);
+
+<span class="storage">var</span> <span class="entity function">toddFilter</span> <span class="keyword operator">=</span> <span class="keyword">function</span>(page, next) {
+    <span class="keyword">var</span> toddRegex <span class="keyword operator">=</span> <span class="string regexp"><span class="string regexp open">/</span><span class="constant regexp escape">\b</span>Todd<span class="constant regexp escape">\b</span><span class="string regexp close">/</span><span class="string regexp modifier">m</span></span>;
+    <span class="keyword">if</span> (toddRegex.<span class="function call">test</span>(page.body)) <span class="function call">next</span>();
+}
+router.<span class="function call">useMiddleware</span>(toddFilter);
+
+<span class="storage">var</span> <span class="entity function">linkExtractionRoute</span> <span class="keyword operator">=</span> <span class="keyword">function</span>(page) {
+    <span class="keyword">var</span> linkRegex <span class="keyword operator">=</span> <span class="string regexp"><span class="string regexp open">/</span><span class="constant regexp escape">\b</span>href="([^"]+)"<span class="constant regexp escape">\b</span><span class="string regexp close">/</span><span class="string regexp modifier">igm</span></span>;
+    <span class="keyword">var</span> match;
+    <span class="keyword">while</span>( match <span class="keyword operator">=</span> linkRegex.<span class="function call">exec</span>(page.body) ) {
+        <span class="function call">makeRequest</span>({uri: match[<span class="constant numeric">1</span>]});
+    }
+    <span class="keyword">var</span> outputFile <span class="keyword operator">=</span> <span class="string">"toddResults/result_"</span> <span class="keyword operator">+</span> pageCount <span class="keyword operator">+</span> <span class="string">".json"</span>;
+    fs.<span class="function call">writeFile</span>(outputFile, JSON.<span class="function call">stringify</span>(page), <span class="keyword">function</span>(err) {
+        console.<span class="support method">log</span>(<span class="string">"Wrote to "</span> <span class="keyword operator">+</span> outputFile);
+    });
+}
+<span class="storage">var</span> <span class="entity function">always</span> <span class="keyword operator">=</span> <span class="keyword">function</span>() { <span class="keyword">return</span> <span class="constant language">true</span>; }
+router.<span class="function call">useRoute</span>(always, linkExtractionRoute);
+router.<span class="function call">handle</span>({uri: <span class="string">"http://www.google.com/search?q=todd"</span>});</code></pre>
+<p>By relying on <strong>inmedia</strong>&#39;s lightweight architecture for routing logic and flow control, all of the utility functions defined above remain modular and don&#39;t become tightly coupled to this particular pipeline.  The <code>toddParser</code> function is general enough to be reused for Todd-related information extraction from any text string.  The <code>toddFilter</code> handler can be reused for any operation related to Todd filtration.  There are many.</p>
+<p><a href="./overview.html">Read the overview</a>, then see the <a href="./api.html">API</a> and <a href="./spec.html">test suite</a>.</p>
+
+</div>
+		</div>
+	</div>
+</body>
+</html>

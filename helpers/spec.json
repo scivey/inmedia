@@ -1,0 +1,207 @@
+{
+  "stats": {
+    "suites": 8,
+    "tests": 19,
+    "passes": 19,
+    "pending": 0,
+    "failures": 0,
+    "start": "2013-11-19T04:23:53.727Z",
+    "end": "2013-11-19T04:23:53.738Z",
+    "duration": 11
+  },
+  "tests": [
+    {
+      "title": "uses the middleware it's passed",
+      "fullTitle": "inmedia MidwareRouter uses the middleware it's passed",
+      "duration": 2
+    },
+    {
+      "title": "uses passed middleware in the correct order.",
+      "fullTitle": "inmedia MidwareRouter uses passed middleware in the correct order.",
+      "duration": 0
+    },
+    {
+      "title": "uses the first true-returning route.",
+      "fullTitle": "inmedia MidwareRouter uses the first true-returning route.",
+      "duration": 0
+    },
+    {
+      "title": "chooses the route based on predicate return value, not on route sequence alone.",
+      "fullTitle": "inmedia MidwareRouter chooses the route based on predicate return value, not on route sequence alone.",
+      "duration": 0
+    },
+    {
+      "title": "allows for a flexible number of pipeline elements (handles different middleware and routing function arities)",
+      "fullTitle": "inmedia MidwareRouter allows for a flexible number of pipeline elements (handles different middleware and routing function arities)",
+      "duration": 0
+    },
+    {
+      "title": "has #handle and #use methods",
+      "fullTitle": "inmedia Midware has #handle and #use methods",
+      "duration": 0
+    },
+    {
+      "title": "uses a passed middleware function to manipulate an object value",
+      "fullTitle": "inmedia Midware uses a passed middleware function to manipulate an object value",
+      "duration": 0
+    },
+    {
+      "title": "passes objects from one middleware function to the next",
+      "fullTitle": "inmedia Midware passes objects from one middleware function to the next",
+      "duration": 0
+    },
+    {
+      "title": "passed pipeline elements to middleware functions in the correct order",
+      "fullTitle": "inmedia Midware passed pipeline elements to middleware functions in the correct order",
+      "duration": 0
+    },
+    {
+      "title": "allows for a flexible number of pipeline elements (handles different middleware function arities)",
+      "fullTitle": "inmedia Midware allows for a flexible number of pipeline elements (handles different middleware function arities)",
+      "duration": 0
+    },
+    {
+      "title": "chooses the first correct route - part 1",
+      "fullTitle": "inmedia PredRouter::functional chooses the first correct route - part 1",
+      "duration": 0
+    },
+    {
+      "title": "chooses the first correct route - part 2",
+      "fullTitle": "inmedia PredRouter::functional chooses the first correct route - part 2",
+      "duration": 0
+    },
+    {
+      "title": "chooses the first correct route - part 3",
+      "fullTitle": "inmedia PredRouter::functional chooses the first correct route - part 3",
+      "duration": 0
+    },
+    {
+      "title": "chooses the first correct route - part 4",
+      "fullTitle": "inmedia PredRouter::functional chooses the first correct route - part 4",
+      "duration": 0
+    },
+    {
+      "title": "has #handle and #use methods",
+      "fullTitle": "inmedia PredRouter has #handle and #use methods",
+      "duration": 0
+    },
+    {
+      "title": "accepts and uses a predicate-handler pair",
+      "fullTitle": "inmedia PredRouter accepts and uses a predicate-handler pair",
+      "duration": 0
+    },
+    {
+      "title": "chooses the route based on predicate result, not on sequence alone",
+      "fullTitle": "inmedia PredRouter chooses the route based on predicate result, not on sequence alone",
+      "duration": 0
+    },
+    {
+      "title": "chooses the first true-returning route when later route predicates would return true for the pipeline element(s)",
+      "fullTitle": "inmedia PredRouter chooses the first true-returning route when later route predicates would return true for the pipeline element(s)",
+      "duration": 0
+    },
+    {
+      "title": "allows for a flexible number of pipeline elements (handles different routing function arities)",
+      "fullTitle": "inmedia PredRouter allows for a flexible number of pipeline elements (handles different routing function arities)",
+      "duration": 1
+    }
+  ],
+  "failures": [],
+  "passes": [
+    {
+      "title": "uses the middleware it's passed",
+      "fullTitle": "inmedia MidwareRouter uses the middleware it's passed",
+      "duration": 2
+    },
+    {
+      "title": "uses passed middleware in the correct order.",
+      "fullTitle": "inmedia MidwareRouter uses passed middleware in the correct order.",
+      "duration": 0
+    },
+    {
+      "title": "uses the first true-returning route.",
+      "fullTitle": "inmedia MidwareRouter uses the first true-returning route.",
+      "duration": 0
+    },
+    {
+      "title": "chooses the route based on predicate return value, not on route sequence alone.",
+      "fullTitle": "inmedia MidwareRouter chooses the route based on predicate return value, not on route sequence alone.",
+      "duration": 0
+    },
+    {
+      "title": "allows for a flexible number of pipeline elements (handles different middleware and routing function arities)",
+      "fullTitle": "inmedia MidwareRouter allows for a flexible number of pipeline elements (handles different middleware and routing function arities)",
+      "duration": 0
+    },
+    {
+      "title": "has #handle and #use methods",
+      "fullTitle": "inmedia Midware has #handle and #use methods",
+      "duration": 0
+    },
+    {
+      "title": "uses a passed middleware function to manipulate an object value",
+      "fullTitle": "inmedia Midware uses a passed middleware function to manipulate an object value",
+      "duration": 0
+    },
+    {
+      "title": "passes objects from one middleware function to the next",
+      "fullTitle": "inmedia Midware passes objects from one middleware function to the next",
+      "duration": 0
+    },
+    {
+      "title": "passed pipeline elements to middleware functions in the correct order",
+      "fullTitle": "inmedia Midware passed pipeline elements to middleware functions in the correct order",
+      "duration": 0
+    },
+    {
+      "title": "allows for a flexible number of pipeline elements (handles different middleware function arities)",
+      "fullTitle": "inmedia Midware allows for a flexible number of pipeline elements (handles different middleware function arities)",
+      "duration": 0
+    },
+    {
+      "title": "chooses the first correct route - part 1",
+      "fullTitle": "inmedia PredRouter::functional chooses the first correct route - part 1",
+      "duration": 0
+    },
+    {
+      "title": "chooses the first correct route - part 2",
+      "fullTitle": "inmedia PredRouter::functional chooses the first correct route - part 2",
+      "duration": 0
+    },
+    {
+      "title": "chooses the first correct route - part 3",
+      "fullTitle": "inmedia PredRouter::functional chooses the first correct route - part 3",
+      "duration": 0
+    },
+    {
+      "title": "chooses the first correct route - part 4",
+      "fullTitle": "inmedia PredRouter::functional chooses the first correct route - part 4",
+      "duration": 0
+    },
+    {
+      "title": "has #handle and #use methods",
+      "fullTitle": "inmedia PredRouter has #handle and #use methods",
+      "duration": 0
+    },
+    {
+      "title": "accepts and uses a predicate-handler pair",
+      "fullTitle": "inmedia PredRouter accepts and uses a predicate-handler pair",
+      "duration": 0
+    },
+    {
+      "title": "chooses the route based on predicate result, not on sequence alone",
+      "fullTitle": "inmedia PredRouter chooses the route based on predicate result, not on sequence alone",
+      "duration": 0
+    },
+    {
+      "title": "chooses the first true-returning route when later route predicates would return true for the pipeline element(s)",
+      "fullTitle": "inmedia PredRouter chooses the first true-returning route when later route predicates would return true for the pipeline element(s)",
+      "duration": 0
+    },
+    {
+      "title": "allows for a flexible number of pipeline elements (handles different routing function arities)",
+      "fullTitle": "inmedia PredRouter allows for a flexible number of pipeline elements (handles different routing function arities)",
+      "duration": 1
+    }
+  ]
+}
