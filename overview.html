@@ -100,7 +100,7 @@ router.<span class="function call">handle</span>({val: <span class="constant num
 <span class="comment">// ODD: 15</span>
 <span class="comment">// EVEN: 10</span></code></pre>
 <p>It&#39;s simple to implement string-based routing on top of the predicate system.  A basic version for URI-based routing: </p>
-<pre><code class="lang-javascript"><span class="entity function">uriStringToPred</span> <span class="keyword operator">=</span> <span class="keyword">function</span>(uri) {
+<pre><code class="lang-javascript"><span class="storage">var</span> <span class="entity function">uriStringToPred</span> <span class="keyword operator">=</span> <span class="keyword">function</span>(uri) {
     <span class="keyword">return</span> <span class="keyword">function</span>(page) {
         <span class="keyword">if</span> (page.uri <span class="keyword operator">=</span><span class="keyword operator">=</span><span class="keyword operator">=</span> uri) <span class="keyword">return</span> <span class="constant language">true</span>;
         <span class="keyword">return</span> <span class="constant language">false</span>;
@@ -197,7 +197,7 @@ router.<span class="function call">handle</span>({name: <span class="string">"Ol
 <p>scott.ivey@gmail.com</p>
 <h2 id="license">License</h2>
 <p>MIT License (MIT)</p>
-<p>Copyright (c) 2013 Scott Ivey, <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#58;&#115;&#x63;&#111;&#x74;&#116;&#46;&#105;&#x76;&#x65;&#x79;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#x6d;">&#115;&#x63;&#111;&#x74;&#116;&#46;&#105;&#x76;&#x65;&#x79;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+<p>Copyright (c) 2013 Scott Ivey, <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x73;&#x63;&#111;&#116;&#116;&#x2e;&#x69;&#118;&#x65;&#121;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;">&#x73;&#x63;&#111;&#116;&#116;&#x2e;&#x69;&#118;&#x65;&#121;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a></p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &quot;Software&quot;), to deal
 in the Software without restriction, including without limitation the rights

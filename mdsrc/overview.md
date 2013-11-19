@@ -70,7 +70,7 @@ router.handle({val: 10});
 It's simple to implement string-based routing on top of the predicate system.  A basic version for URI-based routing: 
 
 ```javascript
-uriStringToPred = function(uri) {
+var uriStringToPred = function(uri) {
 	return function(page) {
 		if (page.uri === uri) return true;
 		return false;
