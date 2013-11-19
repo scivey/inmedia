@@ -3,18 +3,16 @@ Node.js: inmedia
 =================
 Scott Ivey -> http://www.scivey.net
 
-__inmedia__ is an abstracted [Connect][connecturl]-like middleware and routing component for Node.js, with flexible handler signatures and predicate-based routing.
+
+__inmedia__ is an abstracted [Connect][connecturl]-like middleware and routing system for Node.js, with flexible handler signatures and predicate-based route selection.
 
 [connecturl]: http://www.senchalabs.org/connect/
 
 It enables the aggregation of simple, reusable handler functions into complex filters and data transformations.  
 
-The following __inmedia__-based pipeline downloads a given webpage and searches it for the word "Todd."  If "Todd" appears anywhere on the page, it extracts every link, downloads those pages, and repeats the cycle until two hundred pages have been fetched or the trail runs cold.  Each result is written to disk as `toddResults/result_#{NUM}.json` for later processing.
+The following __inmedia__-based pipeline downloads a given webpage and searches it for the string _Todd_.  If _Todd_ appears anywhere on the page, it extracts every link, downloads those pages, and repeats the cycle until two hundred pages have been fetched or the trail runs cold.  Each result is written to disk for later processing.
 
-Why Todd?  Because we like Todd, or maybe because we hate him.
-
-It is unlikely that we are Todd-neutral.
-
+Why Todd?  Because we like Todd, or maybe because we hate him.  Either way, it's clear we have strong feelings.
 
 ```javascript
 var request = require("request");
@@ -60,6 +58,15 @@ router.handle({uri: "http://www.google.com/search?q=todd"});
 
 By relying on __inmedia__'s lightweight architecture for routing logic and flow control, all of the utility functions defined above remain modular and don't become tightly coupled to this particular pipeline.  The `toddParser` function is general enough to be reused for Todd-related information extraction from any text string.  The `toddFilter` handler can be reused for any operation related to Todd filtration.  There are many.
 
+[Documented][api] and [unit tested][tests].
+
+[Read more at the project page.][projectPage]
+
+[projectPage]:http://www.scivey.net/inmedia
+[api]:http://www.scivey.net/inmedia/api.html
+[tests]:http://www.scivey.net/inmedia/spec.html
+[overview]:http://www.scivey.net/inmedia/overview.html
+
 
 Overview
 ---
@@ -98,6 +105,7 @@ router.handle({val: 10}, {val: 20}, {val: 30}, {val: 40});
 // 4: 44
 ```
 
+####Routing
 Routing is based on predicate functions instead of strings, enabling a much wider variety of use cases:
 
 ```javascript
@@ -132,7 +140,7 @@ router.handle({val: 10});
 
 ```
 
-It's simple to implement string-based routing on top of the predicate system.  For URI-based routing, a very basic implementation would look like this:
+It's simple to implement string-based routing on top of the predicate system.  A basic version for URI-based routing: 
 
 ```javascript
 uriStringToPred = function(uri) {
@@ -144,10 +152,11 @@ uriStringToPred = function(uri) {
 router.useRoute(uriStringToPred("/some/route"), routeHandler);
 ```
 
+####Simple Examples
 
-__inmedia__ can be used as a pipeline for event handling, or for any process involving data filtering, manipulation and/or sorting.
+__inmedia__ can be used as a pipeline for event handling, or for any process involving data filtration and/or manipulation.
 
-Filtering:
+#####Filtering with Middleware:
 
 ```javascript
 var onlySmiths = function(person, next) {
@@ -159,7 +168,7 @@ var onlySmiths = function(person, next) {
 }
 
 var printPerson = function(person) {
-	console.log("\nfirst: " + person.first 
+	console.log("first: " + person.first 
 				+ "  last: " + person.last );
 }
 
@@ -178,7 +187,7 @@ router.handle({firstName: "Mary", lastName: "Smith"});
 
 ```
 
-Sorting:
+#####Sorting with Routes:
 
 ```javascript
 
@@ -191,7 +200,7 @@ var isUnder18 = function(person) {
 	return false
 } 
 
-router = inmedia();
+var router = inmedia();
 var childRoute = function(person) {
 	console.log("CHILD: " + person.name);
 }
@@ -211,9 +220,9 @@ router.handle({name: "Little Jimmy", age: 8});
 // "CHILD: Little Jimmy"
 ```
 
-Manipulation or augmentation:
+#####Data Manipulation or Augmentation:
 
-```
+```javascript
 var request = require("request");
 var inmedia = require("inmedia");
 
@@ -237,8 +246,7 @@ router.handle({name: "Old Yeller", age: 12});
 // "Old Yeller is 84 in human years."
 ```
 
-[See the API ==>][api]
-
+[See the API for more information ==>][api]
 
 Installation
 ------------
