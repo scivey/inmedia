@@ -163,7 +163,7 @@ router.useMiddleware(dogMiddleware);
 
 var always = function() { return true; }
 router.useRoute(always, function(dog) {
-	message = dog.name + " is " + dog.ageInHumanYears + " in human years.";
+	var message = dog.name + " is " + dog.ageInHumanYears + " in human years.";
 	console.log(message);
 });
 

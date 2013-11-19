@@ -178,7 +178,7 @@ router.<span class="function call">useMiddleware</span>(dogMiddleware);
 
 <span class="storage">var</span> <span class="entity function">always</span> <span class="keyword operator">=</span> <span class="keyword">function</span>() { <span class="keyword">return</span> <span class="constant language">true</span>; }
 router.<span class="function call">useRoute</span>(always, <span class="keyword">function</span>(dog) {
-    message <span class="keyword operator">=</span> dog.name <span class="keyword operator">+</span> <span class="string">" is "</span> <span class="keyword operator">+</span> dog.ageInHumanYears <span class="keyword operator">+</span> <span class="string">" in human years."</span>;
+    <span class="keyword">var</span> message <span class="keyword operator">=</span> dog.name <span class="keyword operator">+</span> <span class="string">" is "</span> <span class="keyword operator">+</span> dog.ageInHumanYears <span class="keyword operator">+</span> <span class="string">" in human years."</span>;
     console.<span class="support method">log</span>(message);
 });
 
@@ -197,7 +197,7 @@ router.<span class="function call">handle</span>({name: <span class="string">"Ol
 <p>scott.ivey@gmail.com</p>
 <h2 id="license">License</h2>
 <p>MIT License (MIT)</p>
-<p>Copyright (c) 2013 Scott Ivey, <a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#x73;&#x63;&#111;&#116;&#116;&#x2e;&#x69;&#118;&#x65;&#121;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;">&#x73;&#x63;&#111;&#116;&#116;&#x2e;&#x69;&#118;&#x65;&#121;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a></p>
+<p>Copyright (c) 2013 Scott Ivey, <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x73;&#99;&#x6f;&#x74;&#116;&#46;&#105;&#118;&#x65;&#x79;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;">&#x73;&#99;&#x6f;&#x74;&#116;&#46;&#105;&#118;&#x65;&#x79;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#109;</a></p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the &quot;Software&quot;), to deal
 in the Software without restriction, including without limitation the rights
