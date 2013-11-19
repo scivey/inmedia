@@ -24,100 +24,101 @@ never = -> false
 
 makePredRouter = require inlib("predroute.js")
 
-describe "predRouter: functional", ->
+describe "inmedia", ->
+	describe "PredRouter::functional", ->
 
-	router = makePredRouter()
-
-	beforeEach ->
 		router = makePredRouter()
 
-	badHandle = ->
+		beforeEach ->
+			router = makePredRouter()
 
-	# less than 10
-	predLT10 = (obj) ->
-		if obj.val < 10
-			true
-		else
-			false
+		badHandle = ->
 
-	# even
-	predEven = (obj) ->
-		if obj.val % 2
-			false
-		else
-			true
+		# less than 10
+		predLT10 = (obj) ->
+			if obj.val < 10
+				true
+			else
+				false
 
-	# greater than 30
-	predGT30 = (obj) ->
-		if obj.val > 30
-			true
-		else
-			false
+		# even
+		predEven = (obj) ->
+			if obj.val % 2
+				false
+			else
+				true
 
-	# odd
-	predOdd = (obj) ->
-		if obj.val % 2
-			true
-		else
-			false
+		# greater than 30
+		predGT30 = (obj) ->
+			if obj.val > 30
+				true
+			else
+				false
 
-	it "chooses the first correct route - part 1", (done) ->
-		obj =
-			val: 8
+		# odd
+		predOdd = (obj) ->
+			if obj.val % 2
+				true
+			else
+				false
 
-		goodHandle = ->
-			done()
+		it "chooses the first correct route - part 1", (done) ->
+			obj =
+				val: 8
 
-		router.use predGT30, badHandle
-		router.use predOdd, badHandle
-		router.use predLT10, goodHandle
-		router.use predEven, badHandle
+			goodHandle = ->
+				done()
 
-		router.handle [obj]
+			router.use predGT30, badHandle
+			router.use predOdd, badHandle
+			router.use predLT10, goodHandle
+			router.use predEven, badHandle
 
-	it "chooses the first correct route - part 2", (done) ->
+			router.handle [obj]
 
-		obj =
-			val: 37
+		it "chooses the first correct route - part 2", (done) ->
 
-		goodHandle = ->
-			done()
+			obj =
+				val: 37
 
-		router.use predGT30, goodHandle
-		router.use predOdd, badHandle
-		router.use predLT10, badHandle
-		router.use predEven, badHandle
+			goodHandle = ->
+				done()
 
-		router.handle [obj]
+			router.use predGT30, goodHandle
+			router.use predOdd, badHandle
+			router.use predLT10, badHandle
+			router.use predEven, badHandle
 
-	it "chooses the first correct route - part 3", (done) ->
+			router.handle [obj]
 
-		obj =
-			val: 7
+		it "chooses the first correct route - part 3", (done) ->
 
-		goodHandle = ->
-			done()
+			obj =
+				val: 7
 
-		router.use predGT30, badHandle
-		router.use predOdd, goodHandle
-		router.use predLT10, badHandle
-		router.use predEven, badHandle
+			goodHandle = ->
+				done()
 
-		router.handle [obj]
+			router.use predGT30, badHandle
+			router.use predOdd, goodHandle
+			router.use predLT10, badHandle
+			router.use predEven, badHandle
 
-	it "chooses the first correct route - part 4", (done) ->
+			router.handle [obj]
 
-		obj =
-			val: 32
+		it "chooses the first correct route - part 4", (done) ->
 
-		goodHandle = ->
-			done()
+			obj =
+				val: 32
+
+			goodHandle = ->
+				done()
 
 
-		router.use predOdd, badHandle
-		router.use predLT10, badHandle
-		router.use predEven, goodHandle
-		router.use predGT30, badHandle
+			router.use predOdd, badHandle
+			router.use predLT10, badHandle
+			router.use predEven, goodHandle
+			router.use predGT30, badHandle
 
-		router.handle [obj]
+			router.handle [obj]
 

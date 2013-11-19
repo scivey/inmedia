@@ -37,79 +37,81 @@
 
   makePredRouter = require(inlib("predroute.js"));
 
-  describe("PredRouter", function() {
-    var router;
-    router = makePredRouter();
-    beforeEach(function() {
-      return router = makePredRouter();
-    });
-    it("has #handle and #use methods", function() {
-      assert(typeof router.handle === "function");
-      return assert(typeof router.use === "function");
-    });
-    it("accepts and uses a predicate-handler pair", function(done) {
-      var handler, obj;
-      obj = {
-        val: 10
-      };
-      handler = function(obj) {
-        assert(obj.val === 10);
-        return done();
-      };
-      router.use(always, handler);
-      return router.handle([obj]);
-    });
-    it("chooses the route based on predicate result, not on sequence alone", function(done) {
-      var badHandler, handler, obj;
-      obj = {
-        val: 10
-      };
-      handler = function(obj) {
-        assert(obj.val === 10);
-        return done();
-      };
-      badHandler = function() {};
-      router.use(never, badHandler);
-      router.use(always, handler);
-      return router.handle([obj]);
-    });
-    it("allows for a flexible number of pipeline objects", function(done) {
-      var badHandler, handler, obj1, obj2, obj3, obj4;
-      obj1 = {
-        val: 10
-      };
-      obj2 = {
-        val: 20
-      };
-      obj3 = {
-        val: 30
-      };
-      obj4 = {
-        val: 40
-      };
-      handler = function(one, two, three, four) {
-        assert(one.val === 10);
-        assert(two.val === 20);
-        assert(three.val === 30);
-        assert(four.val === 40);
-        return done();
-      };
-      badHandler = function() {};
-      router.use(always, handler);
-      return router.handle([obj1, obj2, obj3, obj4]);
-    });
-    return it("chooses the first true route when multiple predicates would return true for the objects", function(done) {
-      var badHandle, goodHandle, obj;
-      goodHandle = function(obj) {
-        return done();
-      };
-      badHandle = function() {};
-      obj = {
-        val: 10
-      };
-      router.use(always, goodHandle);
-      router.use(always, badHandle);
-      return router.handle([obj]);
+  describe("inmedia", function() {
+    return describe("PredRouter", function() {
+      var router;
+      router = makePredRouter();
+      beforeEach(function() {
+        return router = makePredRouter();
+      });
+      it("has #handle and #use methods", function() {
+        assert(typeof router.handle === "function");
+        return assert(typeof router.use === "function");
+      });
+      it("accepts and uses a predicate-handler pair", function(done) {
+        var handler, obj;
+        obj = {
+          val: 10
+        };
+        handler = function(obj) {
+          assert(obj.val === 10);
+          return done();
+        };
+        router.use(always, handler);
+        return router.handle([obj]);
+      });
+      it("chooses the route based on predicate result, not on sequence alone", function(done) {
+        var badHandler, handler, obj;
+        obj = {
+          val: 10
+        };
+        handler = function(obj) {
+          assert(obj.val === 10);
+          return done();
+        };
+        badHandler = function() {};
+        router.use(never, badHandler);
+        router.use(always, handler);
+        return router.handle([obj]);
+      });
+      it("chooses the first true-returning route when later route predicates would return true for the pipeline element(s)", function(done) {
+        var badHandle, goodHandle, obj;
+        goodHandle = function(obj) {
+          return done();
+        };
+        badHandle = function() {};
+        obj = {
+          val: 10
+        };
+        router.use(always, goodHandle);
+        router.use(always, badHandle);
+        return router.handle([obj]);
+      });
+      return it("allows for a flexible number of pipeline elements (handles different routing function arities)", function(done) {
+        var badHandler, handler, obj1, obj2, obj3, obj4;
+        obj1 = {
+          val: 10
+        };
+        obj2 = {
+          val: 20
+        };
+        obj3 = {
+          val: 30
+        };
+        obj4 = {
+          val: 40
+        };
+        handler = function(one, two, three, four) {
+          assert(one.val === 10);
+          assert(two.val === 20);
+          assert(three.val === 30);
+          assert(four.val === 40);
+          return done();
+        };
+        badHandler = function() {};
+        router.use(always, handler);
+        return router.handle([obj1, obj2, obj3, obj4]);
+      });
     });
   });
 

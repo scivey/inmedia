@@ -37,96 +37,98 @@
 
   makePredRouter = require(inlib("predroute.js"));
 
-  describe("predRouter: functional", function() {
-    var badHandle, predEven, predGT30, predLT10, predOdd, router;
-    router = makePredRouter();
-    beforeEach(function() {
-      return router = makePredRouter();
-    });
-    badHandle = function() {};
-    predLT10 = function(obj) {
-      if (obj.val < 10) {
-        return true;
-      } else {
-        return false;
-      }
-    };
-    predEven = function(obj) {
-      if (obj.val % 2) {
-        return false;
-      } else {
-        return true;
-      }
-    };
-    predGT30 = function(obj) {
-      if (obj.val > 30) {
-        return true;
-      } else {
-        return false;
-      }
-    };
-    predOdd = function(obj) {
-      if (obj.val % 2) {
-        return true;
-      } else {
-        return false;
-      }
-    };
-    it("chooses the first correct route - part 1", function(done) {
-      var goodHandle, obj;
-      obj = {
-        val: 8
+  describe("inmedia", function() {
+    return describe("PredRouter::functional", function() {
+      var badHandle, predEven, predGT30, predLT10, predOdd, router;
+      router = makePredRouter();
+      beforeEach(function() {
+        return router = makePredRouter();
+      });
+      badHandle = function() {};
+      predLT10 = function(obj) {
+        if (obj.val < 10) {
+          return true;
+        } else {
+          return false;
+        }
       };
-      goodHandle = function() {
-        return done();
+      predEven = function(obj) {
+        if (obj.val % 2) {
+          return false;
+        } else {
+          return true;
+        }
       };
-      router.use(predGT30, badHandle);
-      router.use(predOdd, badHandle);
-      router.use(predLT10, goodHandle);
-      router.use(predEven, badHandle);
-      return router.handle([obj]);
-    });
-    it("chooses the first correct route - part 2", function(done) {
-      var goodHandle, obj;
-      obj = {
-        val: 37
+      predGT30 = function(obj) {
+        if (obj.val > 30) {
+          return true;
+        } else {
+          return false;
+        }
       };
-      goodHandle = function() {
-        return done();
+      predOdd = function(obj) {
+        if (obj.val % 2) {
+          return true;
+        } else {
+          return false;
+        }
       };
-      router.use(predGT30, goodHandle);
-      router.use(predOdd, badHandle);
-      router.use(predLT10, badHandle);
-      router.use(predEven, badHandle);
-      return router.handle([obj]);
-    });
-    it("chooses the first correct route - part 3", function(done) {
-      var goodHandle, obj;
-      obj = {
-        val: 7
-      };
-      goodHandle = function() {
-        return done();
-      };
-      router.use(predGT30, badHandle);
-      router.use(predOdd, goodHandle);
-      router.use(predLT10, badHandle);
-      router.use(predEven, badHandle);
-      return router.handle([obj]);
-    });
-    return it("chooses the first correct route - part 4", function(done) {
-      var goodHandle, obj;
-      obj = {
-        val: 32
-      };
-      goodHandle = function() {
-        return done();
-      };
-      router.use(predOdd, badHandle);
-      router.use(predLT10, badHandle);
-      router.use(predEven, goodHandle);
-      router.use(predGT30, badHandle);
-      return router.handle([obj]);
+      it("chooses the first correct route - part 1", function(done) {
+        var goodHandle, obj;
+        obj = {
+          val: 8
+        };
+        goodHandle = function() {
+          return done();
+        };
+        router.use(predGT30, badHandle);
+        router.use(predOdd, badHandle);
+        router.use(predLT10, goodHandle);
+        router.use(predEven, badHandle);
+        return router.handle([obj]);
+      });
+      it("chooses the first correct route - part 2", function(done) {
+        var goodHandle, obj;
+        obj = {
+          val: 37
+        };
+        goodHandle = function() {
+          return done();
+        };
+        router.use(predGT30, goodHandle);
+        router.use(predOdd, badHandle);
+        router.use(predLT10, badHandle);
+        router.use(predEven, badHandle);
+        return router.handle([obj]);
+      });
+      it("chooses the first correct route - part 3", function(done) {
+        var goodHandle, obj;
+        obj = {
+          val: 7
+        };
+        goodHandle = function() {
+          return done();
+        };
+        router.use(predGT30, badHandle);
+        router.use(predOdd, goodHandle);
+        router.use(predLT10, badHandle);
+        router.use(predEven, badHandle);
+        return router.handle([obj]);
+      });
+      return it("chooses the first correct route - part 4", function(done) {
+        var goodHandle, obj;
+        obj = {
+          val: 32
+        };
+        goodHandle = function() {
+          return done();
+        };
+        router.use(predOdd, badHandle);
+        router.use(predLT10, badHandle);
+        router.use(predEven, goodHandle);
+        router.use(predGT30, badHandle);
+        return router.handle([obj]);
+      });
     });
   });
 

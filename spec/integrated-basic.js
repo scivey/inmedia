@@ -57,116 +57,118 @@
     };
   };
 
-  describe("MidwareRouter", function() {
-    var pipeline;
-    pipeline = makeMidwareRouter();
-    beforeEach(function() {
-      return pipeline = makeMidwareRouter();
-    });
-    it("uses the middleware it's passed", function(done) {
-      var anObj, handler, midware;
-      midware = function(obj, next) {
-        obj.val *= 2;
-        return next();
-      };
-      handler = function(obj) {
-        assert(obj.val === 20);
-        return done();
-      };
-      anObj = {
-        val: 10
-      };
-      pipeline.useMiddleware(midware);
-      pipeline.useRoute(always, handler);
-      return pipeline.handle(anObj);
-    });
-    it("uses passed middleware in the correct order.", function(done) {
-      var anObj, handler, midware1, midware2, midware3;
-      midware1 = function(obj, next) {
-        obj.val += 5;
-        return next();
-      };
-      midware2 = function(obj, next) {
-        obj.val *= 2;
-        return next();
-      };
-      midware3 = function(obj, next) {
-        obj.val -= 3;
-        return next();
-      };
-      anObj = {
-        val: 10
-      };
-      handler = function(obj) {
-        assert(obj.val === 27);
-        return done();
-      };
-      pipeline.useMiddleware(midware1);
-      pipeline.useMiddleware(midware2);
-      pipeline.useMiddleware(midware3);
-      pipeline.useRoute(always, handler);
-      return pipeline.handle(anObj);
-    });
-    it("uses the first true-returning route.", function(done) {
-      var anObj, badHandler, goodHandler, midware;
-      midware = function(obj, next) {
-        return next();
-      };
-      anObj = {
-        val: 10
-      };
-      goodHandler = function(obj) {
-        return done();
-      };
-      badHandler = function() {};
-      pipeline.useMiddleware(midware);
-      pipeline.useRoute(always, goodHandler);
-      pipeline.useRoute(always, badHandler);
-      return pipeline.handle(anObj);
-    });
-    it("chooses the correct route based on predicate return value, not on route sequence alone.", function(done) {
-      var anObj, badHandler, goodHandler, midware;
-      midware = function(obj, next) {
-        return next();
-      };
-      anObj = {
-        val: 10
-      };
-      goodHandler = function(obj) {
-        return done();
-      };
-      badHandler = function() {};
-      pipeline.useMiddleware(midware);
-      pipeline.useRoute(never, badHandler);
-      pipeline.useRoute(always, goodHandler);
-      return pipeline.handle(anObj);
-    });
-    return it("allows for a flexible number of pipeline objects", function(done) {
-      var handler, midware, obj1, obj2, obj3;
-      obj1 = {
-        val: 10
-      };
-      obj2 = {
-        val: 20
-      };
-      obj3 = {
-        val: 30
-      };
-      midware = function(one, two, three, next) {
-        one.val += 1;
-        two.val += 2;
-        three.val += 3;
-        return next();
-      };
-      handler = function(one, two, three) {
-        assert(one.val === 11);
-        assert(two.val === 22);
-        assert(three.val === 33);
-        return done();
-      };
-      pipeline.useMiddleware(midware);
-      pipeline.useRoute(always, handler);
-      return pipeline.handle(obj1, obj2, obj3);
+  describe("inmedia", function() {
+    return describe("MidwareRouter", function() {
+      var pipeline;
+      pipeline = makeMidwareRouter();
+      beforeEach(function() {
+        return pipeline = makeMidwareRouter();
+      });
+      it("uses the middleware it's passed", function(done) {
+        var anObj, handler, midware;
+        midware = function(obj, next) {
+          obj.val *= 2;
+          return next();
+        };
+        handler = function(obj) {
+          assert(obj.val === 20);
+          return done();
+        };
+        anObj = {
+          val: 10
+        };
+        pipeline.useMiddleware(midware);
+        pipeline.useRoute(always, handler);
+        return pipeline.handle(anObj);
+      });
+      it("uses passed middleware in the correct order.", function(done) {
+        var anObj, handler, midware1, midware2, midware3;
+        midware1 = function(obj, next) {
+          obj.val += 5;
+          return next();
+        };
+        midware2 = function(obj, next) {
+          obj.val *= 2;
+          return next();
+        };
+        midware3 = function(obj, next) {
+          obj.val -= 3;
+          return next();
+        };
+        anObj = {
+          val: 10
+        };
+        handler = function(obj) {
+          assert(obj.val === 27);
+          return done();
+        };
+        pipeline.useMiddleware(midware1);
+        pipeline.useMiddleware(midware2);
+        pipeline.useMiddleware(midware3);
+        pipeline.useRoute(always, handler);
+        return pipeline.handle(anObj);
+      });
+      it("uses the first true-returning route.", function(done) {
+        var anObj, badHandler, goodHandler, midware;
+        midware = function(obj, next) {
+          return next();
+        };
+        anObj = {
+          val: 10
+        };
+        goodHandler = function(obj) {
+          return done();
+        };
+        badHandler = function() {};
+        pipeline.useMiddleware(midware);
+        pipeline.useRoute(always, goodHandler);
+        pipeline.useRoute(always, badHandler);
+        return pipeline.handle(anObj);
+      });
+      it("chooses the route based on predicate return value, not on route sequence alone.", function(done) {
+        var anObj, badHandler, goodHandler, midware;
+        midware = function(obj, next) {
+          return next();
+        };
+        anObj = {
+          val: 10
+        };
+        goodHandler = function(obj) {
+          return done();
+        };
+        badHandler = function() {};
+        pipeline.useMiddleware(midware);
+        pipeline.useRoute(never, badHandler);
+        pipeline.useRoute(always, goodHandler);
+        return pipeline.handle(anObj);
+      });
+      return it("allows for a flexible number of pipeline elements (handles different middleware and routing function arities)", function(done) {
+        var handler, midware, obj1, obj2, obj3;
+        obj1 = {
+          val: 10
+        };
+        obj2 = {
+          val: 20
+        };
+        obj3 = {
+          val: 30
+        };
+        midware = function(one, two, three, next) {
+          one.val += 1;
+          two.val += 2;
+          three.val += 3;
+          return next();
+        };
+        handler = function(one, two, three) {
+          assert(one.val === 11);
+          assert(two.val === 22);
+          assert(three.val === 33);
+          return done();
+        };
+        pipeline.useMiddleware(midware);
+        pipeline.useRoute(always, handler);
+        return pipeline.handle(obj1, obj2, obj3);
+      });
     });
   });
 

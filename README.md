@@ -58,7 +58,7 @@ router.useRoute(always, linkExtractionRoute);
 router.handle({uri: "http://www.google.com/search?q=todd"});
 ```
 
-By relying on __inmedia__'s lightweight architecture for routing logic and control flow, all of the utility functions defined above stay modular and don't become tightly coupled to this particular pipeline.  The `toddParser` function is general enough to be reused for Todd-related information extraction from any text string.  The `toddFilter` handler can be reused for any operation related to Todd filtration.  There are many.
+By relying on __inmedia__'s lightweight architecture for routing logic and flow control, all of the utility functions defined above remain modular and don't become tightly coupled to this particular pipeline.  The `toddParser` function is general enough to be reused for Todd-related information extraction from any text string.  The `toddFilter` handler can be reused for any operation related to Todd filtration.  There are many.
 
 
 Overview
@@ -227,7 +227,7 @@ router.useMiddleware(dogMiddleware);
 
 var always = function() { return true; }
 router.useRoute(always, function(dog) {
-	message = dog.name + " is " + dog.ageInHumanYears + "in human years.";
+	message = dog.name + " is " + dog.ageInHumanYears + " in human years.";
 	console.log(message);
 });
 

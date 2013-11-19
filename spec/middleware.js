@@ -30,114 +30,116 @@
 
   makeMidwareStack = require(inlib("middleware.js"));
 
-  describe("Midware", function() {
-    var midware;
-    midware = makeMidwareStack();
-    beforeEach(function() {
-      return midware = makeMidwareStack();
-    });
-    it("has #handle and #use methods", function() {
-      assert(typeof midware.handle === "function");
-      return assert(typeof midware.use === "function");
-    });
-    it("uses a passed middleware function to manipulate an object value", function(done) {
-      var fn, _routeObj;
-      fn = function(obj, next) {
-        obj.val *= 2;
-        return next();
-      };
-      _routeObj = {
-        val: 5
-      };
-      midware.use(fn);
-      return midware.handle([_routeObj], function() {
-        var obj, routed;
-        routed = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        obj = routed[0];
-        assert(obj.val === 10);
-        return done();
-      });
-    });
-    it("passes objects from one middleware function to the next", function(done) {
-      var fn, obj;
-      fn = function(obj, next) {
-        obj.val *= 2;
-        return next();
-      };
-      obj = {
-        val: 10
-      };
-      midware.use(fn);
-      midware.use(fn);
-      return midware.handle([obj], function() {
-        var handled;
-        handled = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        assert(handled[0].val === 40);
-        return done();
-      });
-    });
-    it("passed objects to the middleware functions in order", function(done) {
-      var checkin, fn1, fn2, obj;
-      fn1 = function(obj, next) {
-        obj.val += 2;
-        return next();
-      };
-      fn2 = function(obj, next) {
-        obj.val *= 2;
-        return next();
-      };
-      checkin = after(2, function() {
-        return done();
-      });
-      midware.use(fn1);
-      midware.use(fn2);
-      obj = {
-        val: 10
-      };
-      midware.handle([obj], function() {
-        var handled;
-        handled = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        assert(handled[0].val === 24);
-        return checkin();
-      });
+  describe("inmedia", function() {
+    return describe("Midware", function() {
+      var midware;
       midware = makeMidwareStack();
-      midware.use(fn2);
-      midware.use(fn1);
-      obj = {
-        val: 10
-      };
-      return midware.handle([obj], function() {
-        var handled;
-        handled = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        assert(handled[0].val === 22);
-        return checkin();
+      beforeEach(function() {
+        return midware = makeMidwareStack();
       });
-    });
-    return it("allows for a flexible number of pipeline objects (arity)", function(done) {
-      var fn, obj1, obj2, obj3;
-      obj1 = {
-        val: 10
-      };
-      obj2 = {
-        val: 20
-      };
-      obj3 = {
-        val: 30
-      };
-      fn = function(one, two, three, next) {
-        one.val += 1;
-        two.val += 2;
-        three.val += 3;
-        return next();
-      };
-      midware.use(fn);
-      return midware.handle([obj1, obj2, obj3], function() {
-        var handled;
-        handled = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-        assert(handled[0].val === 11);
-        assert(handled[1].val === 22);
-        assert(handled[2].val === 33);
-        return done();
+      it("has #handle and #use methods", function() {
+        assert(typeof midware.handle === "function");
+        return assert(typeof midware.use === "function");
+      });
+      it("uses a passed middleware function to manipulate an object value", function(done) {
+        var fn, _routeObj;
+        fn = function(obj, next) {
+          obj.val *= 2;
+          return next();
+        };
+        _routeObj = {
+          val: 5
+        };
+        midware.use(fn);
+        return midware.handle([_routeObj], function() {
+          var obj, routed;
+          routed = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+          obj = routed[0];
+          assert(obj.val === 10);
+          return done();
+        });
+      });
+      it("passes objects from one middleware function to the next", function(done) {
+        var fn, obj;
+        fn = function(obj, next) {
+          obj.val *= 2;
+          return next();
+        };
+        obj = {
+          val: 10
+        };
+        midware.use(fn);
+        midware.use(fn);
+        return midware.handle([obj], function() {
+          var handled;
+          handled = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+          assert(handled[0].val === 40);
+          return done();
+        });
+      });
+      it("passed pipeline elements to middleware functions in the correct order", function(done) {
+        var checkin, fn1, fn2, obj;
+        fn1 = function(obj, next) {
+          obj.val += 2;
+          return next();
+        };
+        fn2 = function(obj, next) {
+          obj.val *= 2;
+          return next();
+        };
+        checkin = after(2, function() {
+          return done();
+        });
+        midware.use(fn1);
+        midware.use(fn2);
+        obj = {
+          val: 10
+        };
+        midware.handle([obj], function() {
+          var handled;
+          handled = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+          assert(handled[0].val === 24);
+          return checkin();
+        });
+        midware = makeMidwareStack();
+        midware.use(fn2);
+        midware.use(fn1);
+        obj = {
+          val: 10
+        };
+        return midware.handle([obj], function() {
+          var handled;
+          handled = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+          assert(handled[0].val === 22);
+          return checkin();
+        });
+      });
+      return it("allows for a flexible number of pipeline elements (handles different middleware function arities)", function(done) {
+        var fn, obj1, obj2, obj3;
+        obj1 = {
+          val: 10
+        };
+        obj2 = {
+          val: 20
+        };
+        obj3 = {
+          val: 30
+        };
+        fn = function(one, two, three, next) {
+          one.val += 1;
+          two.val += 2;
+          three.val += 3;
+          return next();
+        };
+        midware.use(fn);
+        return midware.handle([obj1, obj2, obj3], function() {
+          var handled;
+          handled = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+          assert(handled[0].val === 11);
+          assert(handled[1].val === 22);
+          assert(handled[2].val === 33);
+          return done();
+        });
       });
     });
   });

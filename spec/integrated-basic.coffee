@@ -34,131 +34,131 @@ doneHandler = (doneFn, assertion) ->
 			assertion.apply null, results
 		doneFn()
 
+describe "inmedia", ->
+	describe "MidwareRouter", ->
 
-describe "MidwareRouter", ->
-
-	pipeline = makeMidwareRouter()
-
-	beforeEach ->
 		pipeline = makeMidwareRouter()
 
-	it "uses the middleware it's passed", (done) ->
+		beforeEach ->
+			pipeline = makeMidwareRouter()
 
-		midware = (obj, next) ->
-			obj.val *= 2
-			next()
+		it "uses the middleware it's passed", (done) ->
 
-		handler = (obj) ->
-			assert( obj.val is 20)
-			done()
+			midware = (obj, next) ->
+				obj.val *= 2
+				next()
 
-		anObj =
-			val: 10
+			handler = (obj) ->
+				assert( obj.val is 20)
+				done()
 
-		pipeline.useMiddleware midware
-		pipeline.useRoute always, handler
-		pipeline.handle anObj
+			anObj =
+				val: 10
 
-	it "uses passed middleware in the correct order.", (done) ->
+			pipeline.useMiddleware midware
+			pipeline.useRoute always, handler
+			pipeline.handle anObj
 
-		midware1 = (obj, next) ->
-			obj.val += 5
-			next()
+		it "uses passed middleware in the correct order.", (done) ->
 
-		midware2 = (obj, next) ->
-			obj.val *= 2
-			next()
+			midware1 = (obj, next) ->
+				obj.val += 5
+				next()
 
-		midware3 = (obj, next) ->
-			obj.val -= 3
-			next()
+			midware2 = (obj, next) ->
+				obj.val *= 2
+				next()
+
+			midware3 = (obj, next) ->
+				obj.val -= 3
+				next()
 
 
-		anObj =
-			val: 10
+			anObj =
+				val: 10
 
-		# 10 + 5 = 15
-		# 15 * 2 = 30
-		# 30 - 3 = 27
+			# 10 + 5 = 15
+			# 15 * 2 = 30
+			# 30 - 3 = 27
 
-		handler = (obj) ->
-			assert (obj.val is 27)
-			done()
+			handler = (obj) ->
+				assert (obj.val is 27)
+				done()
 
-		pipeline.useMiddleware midware1
-		pipeline.useMiddleware midware2
-		pipeline.useMiddleware midware3
+			pipeline.useMiddleware midware1
+			pipeline.useMiddleware midware2
+			pipeline.useMiddleware midware3
 
-		pipeline.useRoute always, handler
-		pipeline.handle anObj
+			pipeline.useRoute always, handler
+			pipeline.handle anObj
 
-	it "uses the first true-returning route.", (done) ->
+		it "uses the first true-returning route.", (done) ->
 
-		midware = (obj, next) ->
-			next()
+			midware = (obj, next) ->
+				next()
 
-		anObj =
-			val: 10
+			anObj =
+				val: 10
 
-		# 10 + 5 = 15
-		# 15 * 2 = 30
-		# 30 - 3 = 27
+			# 10 + 5 = 15
+			# 15 * 2 = 30
+			# 30 - 3 = 27
 
-		goodHandler = (obj) ->
-			done()
+			goodHandler = (obj) ->
+				done()
 
-		badHandler = ->
+			badHandler = ->
 
-		pipeline.useMiddleware midware
-		pipeline.useRoute always, goodHandler
-		pipeline.useRoute always, badHandler
+			pipeline.useMiddleware midware
+			pipeline.useRoute always, goodHandler
+			pipeline.useRoute always, badHandler
 
-		pipeline.handle anObj
+			pipeline.handle anObj
 
-	it "chooses the correct route based on predicate return value, not on route sequence alone.", (done) ->
+		it "chooses the route based on predicate return value, not on route sequence alone.", (done) ->
 
-		midware = (obj, next) ->
-			next()
+			midware = (obj, next) ->
+				next()
 
-		anObj =
-			val: 10
+			anObj =
+				val: 10
 
-		goodHandler = (obj) ->
-			done()
+			goodHandler = (obj) ->
+				done()
 
-		badHandler = ->
+			badHandler = ->
 
-		pipeline.useMiddleware midware
-		pipeline.useRoute never, badHandler
-		pipeline.useRoute always, goodHandler
+			pipeline.useMiddleware midware
+			pipeline.useRoute never, badHandler
+			pipeline.useRoute always, goodHandler
 
-		pipeline.handle anObj
+			pipeline.handle anObj
 
-	it "allows for a flexible number of pipeline objects", (done) ->
+		it "allows for a flexible number of pipeline elements (handles different middleware and routing function arities)", (done) ->
 
-		obj1 =
-			val: 10
+			obj1 =
+				val: 10
 
-		obj2 =
-			val: 20
+			obj2 =
+				val: 20
 
-		obj3 =
-			val: 30
+			obj3 =
+				val: 30
 
-		midware = (one, two, three, next) ->
-			one.val += 1
-			two.val += 2
-			three.val += 3
-			next()
+			midware = (one, two, three, next) ->
+				one.val += 1
+				two.val += 2
+				three.val += 3
+				next()
 
-		handler = (one, two, three) ->
-			assert( one.val is 11 )
-			assert( two.val is 22 )
-			assert( three.val is 33 )
-			done()
+			handler = (one, two, three) ->
+				assert( one.val is 11 )
+				assert( two.val is 22 )
+				assert( three.val is 33 )
+				done()
 
-		pipeline.useMiddleware midware
-		pipeline.useRoute always, handler
+			pipeline.useMiddleware midware
+			pipeline.useRoute always, handler
 
-		pipeline.handle obj1, obj2, obj3
+			pipeline.handle obj1, obj2, obj3
 

@@ -24,84 +24,88 @@ never = -> false
 
 makePredRouter = require inlib("predroute.js")
 
-describe "PredRouter", ->
+describe "inmedia", ->
+	describe "PredRouter", ->
 
-	router = makePredRouter()
-
-	beforeEach ->
 		router = makePredRouter()
 
-	it "has #handle and #use methods", ->
-		assert( typeof router.handle is "function" )
-		assert( typeof router.use is "function" )
+		beforeEach ->
+			router = makePredRouter()
+
+		it "has #handle and #use methods", ->
+			assert( typeof router.handle is "function" )
+			assert( typeof router.use is "function" )
 
 
-	it "accepts and uses a predicate-handler pair", (done) ->
-		obj =
-			val: 10
+		it "accepts and uses a predicate-handler pair", (done) ->
+			obj =
+				val: 10
 
-		handler = (obj) ->
-			assert (obj.val is 10)
-			done()
+			handler = (obj) ->
+				assert (obj.val is 10)
+				done()
 
-		router.use always, handler
+			router.use always, handler
 
-		router.handle [obj]
+			router.handle [obj]
 
-	it "chooses the route based on predicate result, not on sequence alone", (done) ->
 
-		obj =
-			val: 10
+		it "chooses the route based on predicate result, not on sequence alone", (done) ->
 
-		handler = (obj) ->
-			assert (obj.val is 10)
-			done()
+			obj =
+				val: 10
 
-		badHandler = ->
+			handler = (obj) ->
+				assert (obj.val is 10)
+				done()
 
-		router.use never, badHandler
-		router.use always, handler
+			badHandler = ->
 
-		router.handle [obj]
+			router.use never, badHandler
+			router.use always, handler
 
-	it "allows for a flexible number of pipeline objects", (done) ->
+			router.handle [obj]
 
-		obj1 =
-			val: 10
 
-		obj2 =
-			val: 20
+		it "chooses the first true-returning route when later route predicates would return true for the pipeline element(s)", (done) ->
 
-		obj3 =
-			val: 30
+			goodHandle = (obj) ->
+				done()
 
-		obj4 =
-			val: 40
+			badHandle = ->
 
-		handler = (one, two, three, four) ->
-			assert( one.val is 10)
-			assert( two.val is 20)
-			assert( three.val is 30)
-			assert( four.val is 40)
-			done()
+			obj =
+				val: 10
 
-		badHandler = ->
+			router.use always, goodHandle
+			router.use always, badHandle
 
-		router.use always, handler
+			router.handle [obj]
 
-		router.handle [obj1, obj2, obj3, obj4]
 
-	it "chooses the first true route when multiple predicates would return true for the objects", (done) ->
+		it "allows for a flexible number of pipeline elements (handles different routing function arities)", (done) ->
 
-		goodHandle = (obj) ->
-			done()
+			obj1 =
+				val: 10
 
-		badHandle = ->
+			obj2 =
+				val: 20
 
-		obj =
-			val: 10
+			obj3 =
+				val: 30
 
-		router.use always, goodHandle
-		router.use always, badHandle
+			obj4 =
+				val: 40
 
-		router.handle [obj]
+			handler = (one, two, three, four) ->
+				assert( one.val is 10)
+				assert( two.val is 20)
+				assert( three.val is 30)
+				assert( four.val is 40)
+				done()
+
+			badHandler = ->
+
+			router.use always, handler
+
+			router.handle [obj1, obj2, obj3, obj4]
